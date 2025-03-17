@@ -176,6 +176,7 @@ class CodeMapGenerator {
       r'import\s+(['
       '"])([^'
       '"]+)(['
+      // ignore: unnecessary_string_escapes
       '"])((?:\s+(?:as|show|hide)\s+[^;]+)?);',
       caseSensitive: false,
     );
@@ -222,9 +223,11 @@ class CodeMapGenerator {
     bool isLikelyInFunctionBody(String text, int position) {
       var openBraces = 0;
       for (var i = 0; i < position && i < text.length; i++) {
-        if (text[i] == '{')
+        if (text[i] == '{') {
           openBraces++;
-        else if (text[i] == '}') openBraces--;
+        } else if (text[i] == '}') {
+          openBraces--;
+        }
       }
       return openBraces > 0;
     }
@@ -254,7 +257,9 @@ class CodeMapGenerator {
       if (classNames.contains(className) &&
           !isLikelyInFunctionBody(processedContent, match.start)) {
         final signature = constructorName != null
+            // ignore: lines_longer_than_80_chars
             ? '$constKeyword$className.$constructorName($params)${superCall != null ? ' : $superCall' : ''}'
+            // ignore: lines_longer_than_80_chars
             : '$constKeyword$className($params)${superCall != null ? ' : $superCall' : ''}';
 
         if (!constructorSignatures.contains(signature)) {
@@ -347,7 +352,7 @@ class CodeMapGenerator {
           }
 
           // Skip if it’s a lambda or method call argument
-          final precedingText = i > 0 ? lines[i - 1].trim() + ' ' + line : line;
+          final precedingText = i > 0 ? '${lines[i - 1].trim()} $line' : line;
           if (precedingText.contains(RegExp(r'\.\s*\w+\s*\(')) || // e.g., .map(
               line.startsWith('(') || // Starts with ( like a lambda
               (i > 0 && lines[i - 1].trim().endsWith('('))) {
@@ -393,6 +398,7 @@ class CodeMapGenerator {
           name: className,
           signature: classConstructors.length > 1
               ? 'class $className with constructors: $constructorSignatures'
+              // ignore: lines_longer_than_80_chars
               : 'class $className with constructor: ${classConstructors[0].signature}',
         );
       }
