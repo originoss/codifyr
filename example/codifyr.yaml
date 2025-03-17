@@ -1,0 +1,6 @@
+include_relationships: false
+include_dependencies: false
+exclude:
+  - "**/*.gr.dart"
+  - "**/*.freezed.dart"
+  - "**/*.gr.dart"
