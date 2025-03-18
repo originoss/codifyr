@@ -8,7 +8,7 @@ import 'package:pub_updater/pub_updater.dart';
 
 const executableName = 'codifyr';
 const packageName = 'codifyr';
-const description = 'A Very Good Project created by Very Good CLI.';
+const description = 'A CLI tool for generating LLM-friendly codemaps for Flutter projects.';
 
 /// {@template codifyr_command_runner}
 /// A [CommandRunner] for the CLI.
