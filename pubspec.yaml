@@ -1,6 +1,6 @@
 name: codifyr
 description: A CLI tool for generating LLM-friendly codemaps for Flutter projects
-version: 0.1.1
+version: 0.1.2
 homepage: https://github.com/originoss/codifyr
 repository: https://github.com/originoss/codifyr
 issue_tracker: https://github.com/originoss/codifyr/issues

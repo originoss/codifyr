@@ -50,12 +50,12 @@ class Module {
 }
 
 /// Represents a code element in the codebase, such as a class or function.
-/// 
+///
 /// This class is used to store information about code elements found during
 /// code analysis, including their names and signatures.
 class CodeElement extends Equatable {
   /// Creates a new [CodeElement] instance.
-  /// 
+  ///
   /// [name] is the identifier of the code element.
   /// [signature] is the complete declaration signature of the code element.
   const CodeElement({
@@ -92,16 +92,6 @@ class CodeMapGenerator {
         !pubspecFile.existsSync()) {
       throw Exception(
         'Not a valid Dart project. Missing pubspec.yaml or lib directory',
-      );
-    }
-
-    // Validate that this is a Flutter project
-    final pubspecContent =
-        loadYaml(await pubspecFile.readAsString()) as YamlMap;
-    final dependencies = pubspecContent['dependencies'] as YamlMap?;
-    if (dependencies == null || !dependencies.containsKey('flutter')) {
-      throw Exception(
-        'Not a Flutter project. The pubspec.yaml file must have flutter as a dependency',
       );
     }
 

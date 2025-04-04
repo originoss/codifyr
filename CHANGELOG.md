@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.2
+- Fix: Validation failed for project context in some scenarios
+
 ## 0.1.1
 - Make sure this runs in a Flutter project
 - Make sure only "lib" is included in the codemap
