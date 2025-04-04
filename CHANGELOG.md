@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+- Make sure this runs in a Flutter project
+- Make sure only "lib" is included in the codemap
+
 ## 0.1.0
 
 - Initial release of Codifyr

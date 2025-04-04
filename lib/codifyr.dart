@@ -1,4 +1,4 @@
-/// Codifyr - A CLI tool for generating LLM-friendly codemaps for Flutter projects.
+/// Codifyr - A tool for generating LLM-friendly codemaps for Flutter projects.
 ///
 /// This library provides tools to analyze Dart/Flutter projects and generate
 /// structured representations optimized for Large Language Models (LLMs).

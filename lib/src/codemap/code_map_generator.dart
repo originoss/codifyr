@@ -49,13 +49,24 @@ class Module {
       };
 }
 
+/// Represents a code element in the codebase, such as a class or function.
+/// 
+/// This class is used to store information about code elements found during
+/// code analysis, including their names and signatures.
 class CodeElement extends Equatable {
+  /// Creates a new [CodeElement] instance.
+  /// 
+  /// [name] is the identifier of the code element.
+  /// [signature] is the complete declaration signature of the code element.
   const CodeElement({
     required this.name,
     required this.signature,
   });
 
+  /// The identifier name of the code element.
   final String name;
+
+  /// The complete declaration signature of the code element.
   final String signature;
 
   Map<String, dynamic> toJson() => {'name': name, 'signature': signature};
@@ -76,10 +87,21 @@ class CodeMapGenerator {
   final String configPath;
 
   Future<CodeMap> generateCodeMap() async {
+    final pubspecFile = File('$projectPath/pubspec.yaml');
     if (!Directory('$projectPath/lib').existsSync() ||
-        !File('$projectPath/pubspec.yaml').existsSync()) {
+        !pubspecFile.existsSync()) {
       throw Exception(
         'Not a valid Dart project. Missing pubspec.yaml or lib directory',
+      );
+    }
+
+    // Validate that this is a Flutter project
+    final pubspecContent =
+        loadYaml(await pubspecFile.readAsString()) as YamlMap;
+    final dependencies = pubspecContent['dependencies'] as YamlMap?;
+    if (dependencies == null || !dependencies.containsKey('flutter')) {
+      throw Exception(
+        'Not a Flutter project. The pubspec.yaml file must have flutter as a dependency',
       );
     }
 
@@ -120,8 +142,8 @@ class CodeMapGenerator {
   Future<CodeMap> _buildCodeMap(Map<String, dynamic> config) async {
     final modules = <Module>[];
     final relationships = <String, List<String>>{};
-    final includePaths =
-        List<String>.from(config['include'] as List? ?? ['lib']);
+    // Always restrict to /lib directory for Flutter projects
+    const includePaths = ['lib'];
     final excludePaths = List<String>.from(config['exclude'] as List? ?? []);
 
     await for (final entity in Directory(projectPath).list(recursive: true)) {
